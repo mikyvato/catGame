@@ -169,10 +169,9 @@ namespace catGame
             {
                 toques.Add(num);
                 changePlayer();
-                //contador++;
             }
             else {
-                if (toques.Count <= contador)
+                if (toques.Count == contador)
                 {
                     toques.Add(num);
                     changePlayer(); // Cambiar Jugador inicializar contador en cero
@@ -201,7 +200,6 @@ namespace catGame
             else {
                 txt1.SetText("Turno Jugador 1".ToString(), null);
             }
-            //contador++;
         }
     }
 }
