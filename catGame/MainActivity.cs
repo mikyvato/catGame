@@ -24,8 +24,9 @@ namespace catGame
         TextView txt1;
         #endregion
 
+
         protected List<int> toques = new List<int>();
-        protected int contador = 1;
+        protected int contador = 0;
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -33,6 +34,19 @@ namespace catGame
 
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.Main);
+
+            #region Declarar Componentes
+            Button btn1;
+            Button btn2;
+            Button btn3;
+            Button btn4;
+            Button btn5;
+            Button btn6;
+            Button btn7;
+            Button btn8;
+            Button btn9;
+            TextView txt1;
+            #endregion
 
             #region Inicializar Botones
             btn1 = FindViewById<Button>(Resource.Id.button1);
@@ -72,21 +86,24 @@ namespace catGame
             btn7.SetBackgroundResource(Resource.Drawable.turquoise);
             btn8.SetBackgroundResource(Resource.Drawable.indigo);
             btn9.SetBackgroundResource(Resource.Drawable.purple);
+            txt1.SetText("Turno Jugador 1".ToString(),null);
             #endregion
 
         }
 
         private async void Btn9_Click(object sender, EventArgs e)
         {
-            btn9.SetBackgroundResource(Resource.Drawable.purple2);
+            this.btn9.SetBackgroundResource(Resource.Drawable.purple2);
             await Task.Delay(5);
-            btn9.SetBackgroundResource(Resource.Drawable.purple);
+            controlar(9);
+            this.btn9.SetBackgroundResource(Resource.Drawable.purple);
         }
 
         private async void Btn8_Click(object sender, EventArgs e)
         {
             btn8.SetBackgroundResource(Resource.Drawable.indigo2);
             await Task.Delay(5);
+            controlar(8);
             btn8.SetBackgroundResource(Resource.Drawable.indigo);
         }
 
@@ -94,6 +111,7 @@ namespace catGame
         {
             btn7.SetBackgroundResource(Resource.Drawable.turquoise2);
             await Task.Delay(5);
+            controlar(7);
             btn7.SetBackgroundResource(Resource.Drawable.turquoise);
         }
 
@@ -101,6 +119,7 @@ namespace catGame
         {
             btn6.SetBackgroundResource(Resource.Drawable.green2);
             await Task.Delay(5);
+            controlar(6);
             btn6.SetBackgroundResource(Resource.Drawable.green);
         }
 
@@ -108,6 +127,7 @@ namespace catGame
         {
             btn5.SetBackgroundResource(Resource.Drawable.yellow2);
             await Task.Delay(5);
+            controlar(5);
             btn5.SetBackgroundResource(Resource.Drawable.yellow);
         }
 
@@ -115,6 +135,7 @@ namespace catGame
         {
             btn4.SetBackgroundResource(Resource.Drawable.orange2);
             await Task.Delay(5);
+            controlar(4);
             btn4.SetBackgroundResource(Resource.Drawable.orange);
         }
 
@@ -122,6 +143,7 @@ namespace catGame
         {
             btn3.SetBackgroundResource(Resource.Drawable.red2);
             await Task.Delay(5);
+            controlar(3);
             btn3.SetBackgroundResource(Resource.Drawable.red);
         }
 
@@ -129,6 +151,7 @@ namespace catGame
         {
             btn2.SetBackgroundResource(Resource.Drawable.dark2);
             await Task.Delay(5);
+            controlar(2);
             btn2.SetBackgroundResource(Resource.Drawable.dark);
         }
 
@@ -136,29 +159,49 @@ namespace catGame
         {
             btn1.SetBackgroundResource(Resource.Drawable.grey2);
             await Task.Delay(5);
+            controlar(1);
             btn1.SetBackgroundResource(Resource.Drawable.grey);
-            if (contador % 2 == 0)
-                toques.Add(1);
-            else
-                toques.Add(1);
         }
 
         public void controlar(byte num)
         {
-            if (toques.Count == 1)
+            if (toques.Count == 0)
+            {
                 toques.Add(num);
+                changePlayer();
+                //contador++;
+            }
             else {
-                for (int i = 0; i < contador; i++)
+                if (toques.Count <= contador)
                 {
-
+                    toques.Add(num);
+                    changePlayer(); // Cambiar Jugador inicializar contador en cero
+                    contador = 0;
                 }
-            }
-            if (contador % 2 == 0) {
-                txt1.SetText("Turno Jugador 2");
+                else
+                {
+                    if (toques.IndexOf(contador) != num)
+                    {
+                        txt1.SetText("Juagor Pierde".ToString(), null);
+                        contador = 0;
+                    }
+                    else {
+                        contador++;
+                    }
+                }                
+            }            
+        }
+
+        public void changePlayer()
+        {
+            if (contador == 0 || contador % 2 == 0)
+            {
+                txt1.SetText("Turno Jugador 2".ToString(), null);
             }
             else {
-                txt1.SetText("Turno Jugador 1");
+                txt1.SetText("Turno Jugador 1".ToString(), null);
             }
+            //contador++;
         }
     }
 }
