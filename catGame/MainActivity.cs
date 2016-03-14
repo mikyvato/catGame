@@ -1,10 +1,12 @@
 ﻿using System;
 using Android.App;
+using Android.Util;
 using Android.Views;
 using Android.Widget;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Android.OS;
+using System.Linq;
 
 namespace catGame
 {
@@ -25,8 +27,9 @@ namespace catGame
         #endregion
 
 
-        protected List<int> toques = new List<int>();
+        protected int[] toque = new int[50];
         protected int contador = 0;
+        protected int cantToq = 0;
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -34,19 +37,6 @@ namespace catGame
 
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.Main);
-
-            #region Declarar Componentes
-            Button btn1;
-            Button btn2;
-            Button btn3;
-            Button btn4;
-            Button btn5;
-            Button btn6;
-            Button btn7;
-            Button btn8;
-            Button btn9;
-            TextView txt1;
-            #endregion
 
             #region Inicializar Botones
             btn1 = FindViewById<Button>(Resource.Id.button1);
@@ -93,93 +83,95 @@ namespace catGame
 
         private async void Btn9_Click(object sender, EventArgs e)
         {
-            this.btn9.SetBackgroundResource(Resource.Drawable.purple2);
+            btn9.SetBackgroundResource(Resource.Drawable.purple2);
             await Task.Delay(5);
+            btn9.SetBackgroundResource(Resource.Drawable.purple);
             controlar(9);
-            this.btn9.SetBackgroundResource(Resource.Drawable.purple);
         }
 
         private async void Btn8_Click(object sender, EventArgs e)
         {
             btn8.SetBackgroundResource(Resource.Drawable.indigo2);
             await Task.Delay(5);
-            controlar(8);
             btn8.SetBackgroundResource(Resource.Drawable.indigo);
+            controlar(8);
         }
 
         private async void Btn7_Click(object sender, EventArgs e)
         {
             btn7.SetBackgroundResource(Resource.Drawable.turquoise2);
             await Task.Delay(5);
-            controlar(7);
             btn7.SetBackgroundResource(Resource.Drawable.turquoise);
+            controlar(7);
         }
 
         private async void Btn6_Click(object sender, EventArgs e)
         {
             btn6.SetBackgroundResource(Resource.Drawable.green2);
             await Task.Delay(5);
-            controlar(6);
             btn6.SetBackgroundResource(Resource.Drawable.green);
+            controlar(6);
         }
 
         private async void Btn5_Click(object sender, EventArgs e)
         {
             btn5.SetBackgroundResource(Resource.Drawable.yellow2);
             await Task.Delay(5);
-            controlar(5);
             btn5.SetBackgroundResource(Resource.Drawable.yellow);
+            controlar(5);
         }
 
         private async void Btn4_Click(object sender, EventArgs e)
         {
             btn4.SetBackgroundResource(Resource.Drawable.orange2);
             await Task.Delay(5);
-            controlar(4);
             btn4.SetBackgroundResource(Resource.Drawable.orange);
+            controlar(4);
         }
 
         private async void Btn3_Click(object sender, EventArgs e)
         {
             btn3.SetBackgroundResource(Resource.Drawable.red2);
             await Task.Delay(5);
-            controlar(3);
             btn3.SetBackgroundResource(Resource.Drawable.red);
+            controlar(3);
         }
 
         private async void Btn2_Click(object sender, EventArgs e)
         {
             btn2.SetBackgroundResource(Resource.Drawable.dark2);
             await Task.Delay(5);
-            controlar(2);
             btn2.SetBackgroundResource(Resource.Drawable.dark);
+            controlar(2);
         }
 
         private async void Btn1_Click(object sender, EventArgs e)
         {
             btn1.SetBackgroundResource(Resource.Drawable.grey2);
             await Task.Delay(5);
-            controlar(1);
             btn1.SetBackgroundResource(Resource.Drawable.grey);
+            controlar(1);
         }
 
         public void controlar(byte num)
         {
-            if (toques.Count == 0)
+            if (cantToq == 0)
             {
-                toques.Add(num);
+                toque.SetValue(num, cantToq);
                 changePlayer();
+                cantToq++;
             }
             else {
-                if (toques.Count == contador)
+                if (cantToq == contador)
                 {
-                    toques.Add(num);
+                    toque.SetValue(num, contador);
+                    cantToq++;
                     changePlayer(); // Cambiar Jugador inicializar contador en cero
                     contador = 0;
                 }
                 else
                 {
-                    if (toques.IndexOf(contador) != num)
+                    if (toque[contador] != num)
                     {
                         txt1.SetText("Juagor Pierde".ToString(), null);
                         contador = 0;
