@@ -1,12 +1,9 @@
 ﻿using System;
 using Android.App;
-using Android.Util;
-using Android.Views;
 using Android.Widget;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 using Android.OS;
-using System.Linq;
+using Android.Media;
 
 namespace catGame
 {
@@ -26,10 +23,10 @@ namespace catGame
         TextView txt1;
         #endregion
 
-
         protected int[] toque = new int[50];
         protected int contador = 0;
         protected int cantToq = 0;
+        protected MediaPlayer _player;
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -52,6 +49,10 @@ namespace catGame
 
             #region Inicializar TextView
             txt1 = FindViewById<TextView>(Resource.Id.textView1);
+            #endregion
+
+            #region Inicializar Sound
+            _player = MediaPlayer.Create(this, Resource.Raw.chord);
             #endregion
 
             #region Inicializar Evento
@@ -155,6 +156,7 @@ namespace catGame
 
         public void controlar(byte num)
         {
+            _player.Start();
             if (cantToq == 0)
             {
                 toque.SetValue(num, cantToq);
@@ -166,7 +168,7 @@ namespace catGame
                 {
                     toque.SetValue(num, contador);
                     cantToq++;
-                    changePlayer(); // Cambiar Jugador inicializar contador en cero
+                    changePlayer(); 
                     contador = 0;
                 }
                 else
